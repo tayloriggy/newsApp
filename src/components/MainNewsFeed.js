@@ -8,4 +8,5 @@ const MainNewsFeed = (props) => {
   return <div>{sloths}</div>; 
 };
 
+//still needs work
 export default MainNewsFeed;
