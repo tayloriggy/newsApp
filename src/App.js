@@ -1,45 +1,42 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import MainNewsFeed from './components/MainNewsFeed';
-// import SearchBar from './components/SearchBar';
+import SearchBar from './components/SearchBar';
 
-const App = () => {
+const App = (setText, text) => {
   const [items, setItems] = useState([]);
-  const [query, setQuery] = useState('mountains');
-  const [text, setText] = useState('');
+  const [query, setQuery] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
-    const getArticles = async () => {
-      const res = await axios.get(`https://newsapi.org/v2/everything?query=${query}&apiKey=382a8c7028af4e9c80194d4000d35aed`, {
-        params: query
-      })
-      const data = await res.json();
-      setItems(data.articles);
+    const getArticles = async (text) => {
+      const res = await axios.get('https://newsapi.org/v2/everything?q=baseball&apiKey=382a8c7028af4e9c80194d4000d35aed', {
+        params: {
+          query: text
+        }
+      });
+      setItems(res.data.articles);
     }
-
-    getArticles();
-    setIsLoading(false);
+    getArticles(text)
+    setIsLoading(false)
   }, [query]);
+
+  function handleSubmit (e) {
+    e.preventDefault();
+    
+    setQuery(text);
+    setText('');
+  }
 
     return (
       <div className='container-lg'>
         <h1 className='bg-primary p-3'>The Hacker News</h1>
         <nav className='navbar navbar-expand-lg bg-light'>My Navbar</nav>
-          {/* <SearchBar 
-            onSubmit={setItems(items)}
-          /> */}
-          <form autoComplete='off'>
-            <input
-              type='text'
-              name='search'
-              id='search'
-              placeholder='Search here...'
-              />
-          </form>
-          isLoading ? (
-            <div>Loading</div>
+          <SearchBar 
+          onSubmit={handleSubmit} 
+          />
+          {isLoading ? (
+            <div>Loading...</div>
             ) : (
             <section>
             <>
@@ -60,10 +57,8 @@ const App = () => {
                 ))}
               </article>
             </>
-            ))
             </section>
-          {/* <MainNewsFeed />
-          <a href=''></a> */}
+            )}
       </div>
     );
 }
