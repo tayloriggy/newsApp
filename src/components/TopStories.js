@@ -17,15 +17,14 @@ const TopStories = () => {
   }, []);
 
   return (
-      <>
-        <article>   
-          {items.slice(0, 5).map(({ author, urlToImage, publishedAt, title, url, id }) => (
-            <div key={id}>
+        <article key={'article'}>   
+          {items.slice(0, 5).map(({ author, urlToImage, publishedAt, title, url}) => (
+            <div>
               <h2 id='title'>{title}</h2>
               <ul>
-                <li>By {author}</li>
-                <img id="image" src={urlToImage}></img>
-                <li>
+                <li key={'auth'}>By {author}</li>
+                <img id="image" key={'im'} src={urlToImage}></img>
+                <li key={'link'}>
                   <a href={url} target='_blank' rel='noreferrer'>
                   Read Full Article
                   </a>
@@ -35,7 +34,6 @@ const TopStories = () => {
             </div>
           ))}
         </article>
-      </>
   );
 
 }

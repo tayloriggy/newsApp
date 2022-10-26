@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
-import './style.scss';
+import './style.css';
 import TopStories from './components/TopStories';
 
 const App = () => {
@@ -36,7 +36,7 @@ const App = () => {
   }
 
     return (
-      <div>
+      <div key={'articles'}>
         <h1 className='title'>THE HACKER NEWS</h1>
         <nav className='navbar'>My Navbar</nav>
         <br />
@@ -55,16 +55,15 @@ const App = () => {
         {isLoading ? (
             <div>Loading...</div>
             ) : (
-            <section col-8>
-            <>
-              <article className='card cards-everything'>   
+            <section className='col-8'>
+              <article className='card cards-everything' key='cards'>   
                 {items.slice(0, 10).map(({ author, urlToImage, publishedAt, title, url, id }) => (
                   <div key={id} className='card-body'>
                     <h2 id='title'>{title}</h2>
                     <ul>
-                      <li>By {author}</li>
-                      <img id="image" src={urlToImage}></img>
-                      <li>
+                      <li key={'author'}>By {author}</li>
+                      <img id="image" src={urlToImage} key='img'></img>
+                      <li key={'linky'}>
                         <a href={url} target='_blank' rel='noreferrer'>
                         Read Full Article
                         </a>
@@ -74,7 +73,6 @@ const App = () => {
                   </div>
                 ))}
               </article>
-            </>
             </section>
             )}
             <div id='topStories'>
