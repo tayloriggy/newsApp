@@ -17,6 +17,12 @@
     margin-left: 2rem;
 }
 
+#author {
+    font-size: 15px;
+    display: flex;
+    
+}
+
 #image {
     width: 75%;
 }
